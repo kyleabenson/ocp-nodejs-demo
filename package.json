@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-ex",
+  "version": "0.0.1",
+  "description": "Node.js sample app for OpenShift 3",
+  "main": "server.js",
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "mocha": "^2.4.5"
+  },
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyle-benson/nodejs-demo"
+  },
+  "author": "Kyle Benson <kbenson@redhat.com>",
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "https://github.com/kyle-benson/nodejs-demo/issues"
+  },
+  "homepage": "https://github.com/kyle-benson/nodejs-demo"
+}
