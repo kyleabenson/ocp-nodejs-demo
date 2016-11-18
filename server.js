@@ -3,7 +3,7 @@ var app = express();
 
 // viewed at http://localhost:8080
 app.get('/', function (req, res) {
-  res.send('Hello Partner Training World!');
+  res.send('Hello Partner Training Demo!!');
   console.log("Successful basic 200 request V2")
 });
 
