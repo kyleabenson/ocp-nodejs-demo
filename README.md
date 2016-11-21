@@ -22,9 +22,8 @@ This demo will show how to use OpenShift's built in HAProxy capabilities to load
 
     ```
 
-5. Create new git code via branch
-
-6. Create second nodejs pod from branch or most recent commit
+5. Create second nodejs pod from new branch or updated commit
 
 7. Setup route to load balance between appA & appB
-	Routes > Edit > Split Traffic
+	 Routes > Edit > Split Traffic
+  ![ocp route gif]( doc_gifs/ocp_AB_routes.gif "Enabling an AB route in the UI")
