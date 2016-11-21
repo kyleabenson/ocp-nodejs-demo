@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Ocp-nodejs-demo : This demo shows a simple NodeJS Express server to demonstrate the AB Load Balancing capabilities of OpenShift Container Platform 3.3">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ocp-nodejs-demo</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kyle-benson/ocp-nodejs-demo">View on GitHub</a>
+
+          <h1 id="project_title">Ocp-nodejs-demo</h1>
+          <h2 id="project_tagline">This demo shows a simple NodeJS Express server to demonstrate the AB Load Balancing capabilities of OpenShift Container Platform 3.3</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kyle-benson/ocp-nodejs-demo/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kyle-benson/ocp-nodejs-demo/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="ocp-nodejs-demo" class="anchor" href="#ocp-nodejs-demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ocp-nodejs-demo</h1>
+
+<p>This demo will show how to use OpenShift's built in HAProxy capabilities to load balance across two NodeJs Express Pods</p>
+
+<ol>
+<li>
+<p>Create basic node.js web app w/ git repo from a previous commit</p>
+
+<pre><code>oc new-project balanced
+oc new-app https://github.com/kyle-benson/ocp-nodejs-demo.git#b69a1b0f0c3195baa0dbd2ff600f8bebc38c7ade --name='app1'
+</code></pre>
+
+<p><strong>NOTE! Do not create a route automatically for this exercise</strong></p>
+</li>
+<li>
+<p>Create route for initial pod</p>
+
+<pre><code>oc expose svc/app1 --name="appab" --hostname=appab-balanced.master.kbenson.co
+</code></pre>
+</li>
+<li>
+<p>Start testing route via curl</p>
+
+<pre><code>while true; do curl appab-balanced.master.kbenson.co &amp;&amp; echo &amp;&amp; sleep 5; done
+</code></pre>
+</li>
+<li>
+<p>Annotate route</p>
+
+<pre><code>oc get routes
+oc annotate route/appab haproxy.router.openshift.io/balance=roundrobin
+</code></pre>
+</li>
+<li>
+<p>Create second nodejs pod from new branch or updated commit</p>
+
+<pre><code>oc new-app https://github.com/kyle-benson/ocp-nodejs-demo.git --name="app2"
+</code></pre>
+</li>
+<li>Setup route to load balance between appA &amp; appB
+ Routes &gt; Edit &gt; Split Traffic
+<img src="doc_gifs/ocp_AB_routes.gif" alt="ocp route gif" title="Enabling an AB route in the UI">
+</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ocp-nodejs-demo maintained by <a href="https://github.com/kyle-benson">kyle-benson</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
